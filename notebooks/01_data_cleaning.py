@@ -1,14 +1,14 @@
 """
-01_Data_Cleaning.py
-Financial Performance Dashboard - Data Generation & Cleaning Pipeline
+01_data_cleaning.py
+Financial Performance Dashboard - Automated ETL Pipeline & Data Validation
 Author: Senior Data Analyst & BI Developer
-Description: Generates 12,000+ realistic raw financial transactions with deliberate anomalies, 
-             performs rigorous data cleaning (missing value imputation, deduplication, 
-             IQR outlier capping, dtype conversion, and metric feature engineering), 
-             and exports raw and cleaned CSV datasets.
+Description: Automated ETL pipeline that generates 12,000+ raw financial records,
+             executes data validation checks, performs data cleaning & outlier treatment (3x IQR),
+             engineers calculated metrics, and exports validated CSV datasets.
 """
 
 import os
+import sys
 import numpy as np
 import pandas as pd
 from datetime import datetime, timedelta
@@ -18,18 +18,16 @@ def create_directories():
     directories = ['data', 'sql', 'notebooks', 'powerbi', 'streamlit', 'dashboard_images', 'reports']
     for d in directories:
         os.makedirs(d, exist_ok=True)
-    print("Directories verified.")
+    print("[ETL] Directories verified.")
 
 def generate_raw_financial_data(num_records=12000, seed=42):
     """Generate realistic raw financial dataset with synthetic anomalies."""
     np.random.seed(seed)
     
-    # Dates spanning 2023 to 2025
     start_date = datetime(2023, 1, 1)
     date_list = [start_date + timedelta(days=int(i)) for i in np.random.randint(0, 1095, size=num_records)]
     date_list.sort()
     
-    # Structural mappings
     region_country_city = {
         'North America': [('USA', 'New York'), ('USA', 'San Francisco'), ('USA', 'Chicago'), ('Canada', 'Toronto')],
         'Europe': [('UK', 'London'), ('Germany', 'Frankfurt'), ('France', 'Paris'), ('Netherlands', 'Amsterdam')],
@@ -58,7 +56,6 @@ def generate_raw_financial_data(num_records=12000, seed=42):
         txn_id = f"TXN-{10001 + i}"
         dt = date_list[i]
         
-        # Region selection & hierarchy
         region = np.random.choice(list(region_country_city.keys()), p=[0.35, 0.25, 0.20, 0.10, 0.10])
         country, city = region_country_city[region][np.random.randint(0, len(region_country_city[region]))]
         
@@ -71,7 +68,6 @@ def generate_raw_financial_data(num_records=12000, seed=42):
         segment = np.random.choice(customer_segments, p=[0.40, 0.30, 0.20, 0.10])
         channel = np.random.choice(sales_channels, p=[0.35, 0.30, 0.20, 0.15])
         
-        # Base financial dynamics by category
         if category == 'Software Services':
             base_rev = np.random.uniform(5000, 45000)
             cogs_pct = np.random.uniform(0.15, 0.30)
@@ -88,21 +84,24 @@ def generate_raw_financial_data(num_records=12000, seed=42):
             base_rev = np.random.uniform(3000, 35000)
             cogs_pct = np.random.uniform(0.40, 0.55)
             
-        # Add YoY growth trend (2023 -> 2024 -> 2025)
         year = dt.year
         growth_factor = 1.0 if year == 2023 else (1.12 if year == 2024 else 1.25)
-        # Seasonality boost in Q4
         month = dt.month
         seasonality = 1.25 if month in [11, 12] else (1.10 if month in [9, 10] else 1.0)
         
         revenue = round(base_rev * growth_factor * seasonality, 2)
         cogs = round(revenue * cogs_pct, 2)
         operating_expense = round(revenue * np.random.uniform(0.10, 0.22), 2)
-        marketing_expense = round(revenue * np.random.uniform(0.04, 0.12), 2)
+        
+        # Introduce Q3 marketing cost efficiency drop anomaly
+        if month in [7, 8, 9]:
+            marketing_expense = round(revenue * np.random.uniform(0.12, 0.20), 2)
+        else:
+            marketing_expense = round(revenue * np.random.uniform(0.04, 0.10), 2)
+            
         discount = round(revenue * np.random.uniform(0.0, 0.15), 2)
         tax = round((revenue - cogs - operating_expense) * np.random.uniform(0.08, 0.18), 2)
-        if tax < 0:
-            tax = 0.0
+        if tax < 0: tax = 0.0
             
         profit = round(revenue - cogs - operating_expense - marketing_expense - tax, 2)
         profit_margin = round((profit / revenue) * 100, 2) if revenue > 0 else 0.0
@@ -139,8 +138,7 @@ def generate_raw_financial_data(num_records=12000, seed=42):
         
     df = pd.DataFrame(records)
     
-    # Introduce deliberate real-world data quality anomalies for cleaning demonstration:
-    # 1. Missing Values (~2.5% missing in Marketing Expense, Discount, Customer Segment)
+    # Introduce real-world anomalies
     missing_idx_mkt = np.random.choice(df.index, size=int(0.025 * num_records), replace=False)
     df.loc[missing_idx_mkt, 'Marketing Expense'] = np.nan
     
@@ -150,16 +148,13 @@ def generate_raw_financial_data(num_records=12000, seed=42):
     missing_idx_seg = np.random.choice(df.index, size=int(0.015 * num_records), replace=False)
     df.loc[missing_idx_seg, 'Customer Segment'] = np.nan
     
-    # 2. Outliers / Extremes (~0.5% data entry errors)
     outlier_idx = np.random.choice(df.index, size=int(0.005 * num_records), replace=False)
     df.loc[outlier_idx, 'Revenue'] = df.loc[outlier_idx, 'Revenue'] * np.random.uniform(8.0, 15.0)
     
-    # 3. Duplicate Rows (~1.5% duplicates)
     dup_idx = np.random.choice(df.index, size=int(0.015 * num_records), replace=False)
     duplicates = df.loc[dup_idx].copy()
     df = pd.concat([df, duplicates], ignore_index=True)
     
-    # 4. Text Inconsistencies (extra whitespace, lowercase)
     unstandard_idx = np.random.choice(df.index, size=int(0.03 * num_records), replace=False)
     df.loc[unstandard_idx, 'Region'] = df.loc[unstandard_idx, 'Region'].str.lower()
     
@@ -168,17 +163,24 @@ def generate_raw_financial_data(num_records=12000, seed=42):
     
     return df
 
+def validate_raw_data(df):
+    """Data Validation Check on Raw Dataset."""
+    print("\n--- [ETL Data Validation Check 1: Raw Data] ---")
+    assert len(df) >= 10000, f"Validation Failed: Expected >= 10,000 records, got {len(df)}"
+    required_cols = ['Transaction ID', 'Date', 'Region', 'Revenue', 'Cost of Goods Sold (COGS)', 'Budget']
+    for col in required_cols:
+        assert col in df.columns, f"Validation Failed: Missing column '{col}'"
+    print(f"[PASS] Raw Data Validation Passed: {len(df):,} records & schema verified.")
+
 def clean_financial_data(df):
-    """Execute rigorous data cleaning pipeline on raw dataset."""
-    print(f"\n--- Starting Data Cleaning Routine ---")
-    print(f"Raw dataset shape: {df.shape}")
+    """Execute data cleaning & feature engineering pipeline."""
+    print(f"\n--- [ETL Pipeline: Data Cleaning & Transformation] ---")
     
     # Step 1: Deduplication
     initial_count = len(df)
     df = df.drop_duplicates().reset_index(drop=True)
     df = df.drop_duplicates(subset=['Transaction ID']).reset_index(drop=True)
-    dups_removed = initial_count - len(df)
-    print(f"[1/6] Duplicate records removed: {dups_removed}")
+    print(f"[OK] Deduplication: Removed {initial_count - len(df)} duplicate records.")
     
     # Step 2: Text Standardization
     text_cols = ['Region', 'Country', 'City', 'Business Unit', 'Department', 
@@ -186,24 +188,19 @@ def clean_financial_data(df):
     for col in text_cols:
         if col in df.columns:
             df[col] = df[col].astype(str).str.strip().str.title()
-            # Restore specific acronyms
             df[col] = df[col].replace({'Smb': 'SMB', 'Uae': 'UAE', 'Usa': 'USA', 'Uk': 'UK', 'Ai': 'AI', 'Erp': 'ERP', 'Saas': 'SaaS'})
-    print("[2/6] Text fields standardized and trimmed.")
+    print("[OK] Standardization: Trimmed whitespace & fixed proper casing.")
     
-    # Step 3: Handle Missing Values
-    # Categorical missing values -> Mode or 'Unknown'
+    # Step 3: Missing Value Imputation
     if 'Customer Segment' in df.columns:
-        df['Customer Segment'] = df['Customer Segment'].replace({'Nan': 'Enterprise', 'None': 'Enterprise'})
-        df['Customer Segment'] = df['Customer Segment'].fillna('Enterprise')
-        
-    # Numerical missing values -> Group median or zero fill for optional metrics
+        df['Customer Segment'] = df['Customer Segment'].replace({'Nan': 'Enterprise', 'None': 'Enterprise'}).fillna('Enterprise')
     if 'Marketing Expense' in df.columns:
         df['Marketing Expense'] = df.groupby('Product Category')['Marketing Expense'].transform(lambda x: x.fillna(x.median()))
     if 'Discount' in df.columns:
         df['Discount'] = df['Discount'].fillna(0.0)
-    print("[3/6] Missing values imputed.")
+    print("[OK] Imputation: Imputed categorical modes & category median expenses.")
     
-    # Step 4: Convert Data Types & Dates
+    # Step 4: Data Types & Dates
     df['Date'] = pd.to_datetime(df['Date'])
     df['Year'] = df['Date'].dt.year
     df['Month'] = df['Date'].dt.strftime('%B')
@@ -213,20 +210,20 @@ def clean_financial_data(df):
                     'Marketing Expense', 'Discount', 'Tax', 'Budget', 'Actual Sales']
     for col in numeric_cols:
         df[col] = pd.to_numeric(df[col], errors='coerce').fillna(0.0)
-    print("[4/6] Data types and date dimensions converted.")
+    print("[OK] Type Conversion: Datetime & numeric fields cast.")
     
-    # Step 5: Detect & Treat Outliers using IQR Capping for Revenue & Expenses
+    # Step 5: IQR Outlier Detection & Capping
     for col in ['Revenue', 'Operating Expense']:
         Q1 = df[col].quantile(0.25)
         Q3 = df[col].quantile(0.75)
         IQR = Q3 - Q1
-        upper_bound = Q3 + 3.0 * IQR # 3x IQR conservative upper limit
+        upper_bound = Q3 + 3.0 * IQR
         outlier_count = (df[col] > upper_bound).sum()
         if outlier_count > 0:
             df[col] = np.where(df[col] > upper_bound, upper_bound, df[col])
-            print(f"[5/6] Outliers treated in {col}: {outlier_count} records capped at {upper_bound:.2f}")
+            print(f"[OK] Outliers Treated: {outlier_count} records capped in '{col}' at {upper_bound:.2f}")
             
-    # Step 6: Recalculate Financial Metrics for Absolute Accuracy
+    # Step 6: Feature Engineering
     df['Gross Profit'] = np.round(df['Revenue'] - df['Cost of Goods Sold (COGS)'], 2)
     df['Operating Profit'] = np.round(df['Gross Profit'] - df['Operating Expense'] - df['Marketing Expense'], 2)
     df['Profit'] = np.round(df['Operating Profit'] - df['Tax'], 2)
@@ -237,10 +234,15 @@ def clean_financial_data(df):
     df['Total Expense'] = np.round(df['Cost of Goods Sold (COGS)'] + df['Operating Expense'] + df['Marketing Expense'] + df['Tax'], 2)
     df['Cost Ratio'] = np.where(df['Revenue'] > 0, np.round((df['Total Expense'] / df['Revenue']) * 100, 2), 0.0)
     
-    print("[6/6] Calculated financial columns engineered.")
-    print(f"Cleaned dataset shape: {df.shape}")
-    
     return df
+
+def validate_cleaned_data(df):
+    """Data Validation Check on Cleaned Dataset."""
+    print("\n--- [ETL Data Validation Check 2: Cleaned Data] ---")
+    assert df['Transaction ID'].nunique() == len(df), "Validation Failed: Duplicate Transaction IDs present"
+    assert df.isnull().sum().sum() == 0, f"Validation Failed: {df.isnull().sum().sum()} missing values remain"
+    assert (df['Revenue'] >= 0).all(), "Validation Failed: Negative revenue values detected"
+    print(f"[PASS] Cleaned Data Validation Passed: 0 missing values, unique IDs ({len(df):,} records).")
 
 def main():
     create_directories()
@@ -250,11 +252,12 @@ def main():
     print("Generating raw financial dataset...")
     df_raw = generate_raw_financial_data(num_records=12000, seed=42)
     df_raw.to_csv(raw_path, index=False)
-    print(f"Raw financial dataset saved to '{raw_path}' ({len(df_raw)} rows).")
+    validate_raw_data(df_raw)
     
     df_cleaned = clean_financial_data(df_raw)
+    validate_cleaned_data(df_cleaned)
     df_cleaned.to_csv(cleaned_path, index=False)
-    print(f"Cleaned dataset successfully exported to '{cleaned_path}' ({len(df_cleaned)} rows).")
+    print(f"\n[ETL Pipeline Complete] Validated cleaned dataset exported to '{cleaned_path}'.")
 
 if __name__ == '__main__':
     main()
