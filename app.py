@@ -13,9 +13,19 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-# Add current directory to path
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from streamlit.kpi_engine import calculate_kpis, calculate_yoy_growth
+import importlib.util
+
+# Robustly load kpi_engine module avoiding streamlit package namespace collision
+kpi_engine_path = os.path.join(os.path.dirname(__file__), 'streamlit', 'kpi_engine.py')
+if not os.path.exists(kpi_engine_path):
+    kpi_engine_path = os.path.join(os.path.dirname(__file__), 'kpi_engine.py')
+
+spec = importlib.util.spec_from_file_location("kpi_engine", kpi_engine_path)
+kpi_engine = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(kpi_engine)
+
+calculate_kpis = kpi_engine.calculate_kpis
+calculate_yoy_growth = kpi_engine.calculate_yoy_growth
 
 # -----------------------------------------------------------------------------
 # 1. PAGE CONFIGURATION & THEME STYLING
