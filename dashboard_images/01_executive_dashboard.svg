@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%" style="background-color: #0f172a; font-family: Inter, sans-serif;">
+  <!-- Header -->
+  <rect x="0" y="0" width="1000" height="60" fill="#1e293b"/>
+  <text x="30" y="38" fill="#f8fafc" font-size="20" font-weight="bold">📊 Power BI - Page 1: Executive Financial Summary</text>
+  
+  <!-- KPI Row -->
+  <rect x="30" y="80" width="220" height="90" rx="10" fill="#1e293b" stroke="#334155"/>
+  <text x="50" y="110" fill="#94a3b8" font-size="12" font-weight="bold">TOTAL REVENUE</text>
+  <text x="50" y="145" fill="#f8fafc" font-size="24" font-weight="bold">$366.57M</text>
+  <text x="170" y="145" fill="#10b981" font-size="12" font-weight="bold">+15.2% YoY</text>
+
+  <rect x="270" y="80" width="220" height="90" rx="10" fill="#1e293b" stroke="#334155"/>
+  <text x="290" y="110" fill="#94a3b8" font-size="12" font-weight="bold">GROSS PROFIT</text>
+  <text x="290" y="145" fill="#f8fafc" font-size="24" font-weight="bold">$216.04M</text>
+  <text x="410" y="145" fill="#10b981" font-size="12" font-weight="bold">58.9% Marg</text>
+
+  <rect x="510" y="80" width="220" height="90" rx="10" fill="#1e293b" stroke="#334155"/>
+  <text x="530" y="110" fill="#94a3b8" font-size="12" font-weight="bold">NET PROFIT</text>
+  <text x="530" y="145" fill="#f8fafc" font-size="24" font-weight="bold">$109.79M</text>
+  <text x="650" y="145" fill="#10b981" font-size="12" font-weight="bold">29.9% Marg</text>
+
+  <rect x="750" y="80" width="220" height="90" rx="10" fill="#1e293b" stroke="#334155"/>
+  <text x="770" y="110" fill="#94a3b8" font-size="12" font-weight="bold">BUDGET TARGET</text>
+  <text x="770" y="145" fill="#f8fafc" font-size="24" font-weight="bold">$360.92M</text>
+  <text x="890" y="145" fill="#f59e0b" font-size="12" font-weight="bold">101.6% Util</text>
+
+  <!-- Main Chart: Monthly Trend -->
+  <rect x="30" y="190" width="580" height="370" rx="10" fill="#1e293b" stroke="#334155"/>
+  <text x="50" y="225" fill="#f8fafc" font-size="16" font-weight="bold">Monthly Revenue &amp; Net Profit vs Budget Target ($M)</text>
+  <path d="M 60 480 Q 200 420 350 380 T 580 280" fill="none" stroke="#6366f1" stroke-width="4"/>
+  <path d="M 60 510 Q 200 470 350 430 T 580 360" fill="none" stroke="#10b981" stroke-width="4"/>
+  <line x1="60" y1="360" x2="580" y2="360" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,6"/>
+
+  <!-- Right Chart: Business Unit Budget Variance -->
+  <rect x="630" y="190" width="340" height="370" rx="10" fill="#1e293b" stroke="#334155"/>
+  <text x="650" y="225" fill="#f8fafc" font-size="16" font-weight="bold">Budget Variance by BU ($M)</text>
+  <rect x="660" y="260" width="220" height="35" rx="4" fill="#10b981"/>
+  <text x="670" y="283" fill="#ffffff" font-size="12" font-weight="bold">Enterprise Solutions (+$2.8M)</text>
+  <rect x="660" y="315" width="180" height="35" rx="4" fill="#10b981"/>
+  <text x="670" y="338" fill="#ffffff" font-size="12" font-weight="bold">Digital Services (+$1.9M)</text>
+  <rect x="660" y="370" width="140" height="35" rx="4" fill="#10b981"/>
+  <text x="670" y="393" fill="#ffffff" font-size="12" font-weight="bold">Financial Services (+$1.2M)</text>
+  <rect x="660" y="425" width="90" height="35" rx="4" fill="#ef4444"/>
+  <text x="670" y="448" fill="#ffffff" font-size="12" font-weight="bold">Consumer Goods (-$0.3M)</text>
+</svg>

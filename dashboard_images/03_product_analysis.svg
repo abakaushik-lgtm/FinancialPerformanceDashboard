@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%" style="background-color: #0f172a; font-family: Inter, sans-serif;">
+  <rect x="0" y="0" width="1000" height="60" fill="#1e293b"/>
+  <text x="30" y="38" fill="#f8fafc" font-size="20" font-weight="bold">📦 Power BI - Page 3: Product Portfolio &amp; Margin Analysis</text>
+  
+  <!-- Treemap Left -->
+  <rect x="30" y="80" width="460" height="480" rx="10" fill="#1e293b" stroke="#334155"/>
+  <text x="50" y="115" fill="#f8fafc" font-size="16" font-weight="bold">Category Revenue Contribution % Treemap</text>
+
+  <rect x="50" y="135" width="220" height="240" fill="#10b981" rx="6"/>
+  <text x="65" y="165" fill="#ffffff" font-size="14" font-weight="bold">Software Services</text>
+  <text x="65" y="185" fill="#ffffff" font-size="12">$111.17M (30.3%)</text>
+  <text x="65" y="205" fill="#ffffff" font-size="12" font-weight="bold">46.5% Net Margin</text>
+
+  <rect x="280" y="135" width="190" height="240" fill="#3b82f6" rx="6"/>
+  <text x="295" y="165" fill="#ffffff" font-size="14" font-weight="bold">Hardware Systems</text>
+  <text x="295" y="185" fill="#ffffff" font-size="12">$99.82M (27.2%)</text>
+  <text x="295" y="205" fill="#ffffff" font-size="12" font-weight="bold">14.6% Net Margin</text>
+
+  <rect x="50" y="385" width="200" height="155" fill="#6366f1" rx="6"/>
+  <text x="65" y="415" fill="#ffffff" font-size="13" font-weight="bold">Cloud Infra</text>
+  <text x="65" y="435" fill="#ffffff" font-size="11">$98.15M (26.8%)</text>
+
+  <rect x="260" y="385" width="110" height="155" fill="#f59e0b" rx="6"/>
+  <text x="270" y="415" fill="#ffffff" font-size="11" font-weight="bold">Electronics</text>
+  <text x="270" y="435" fill="#ffffff" font-size="10">$29.73M</text>
+
+  <rect x="380" y="385" width="90" height="155" fill="#ec4899" rx="6"/>
+  <text x="385" y="415" fill="#ffffff" font-size="10" font-weight="bold">Consulting</text>
+  <text x="385" y="435" fill="#ffffff" font-size="9">$27.70M</text>
+
+  <!-- Right Side Scatter Plot -->
+  <rect x="510" y="80" width="460" height="480" rx="10" fill="#1e293b" stroke="#334155"/>
+  <text x="530" y="115" fill="#f8fafc" font-size="16" font-weight="bold">Product Revenue vs Profit Margin % Scatter Plot</text>
+  
+  <circle cx="850" cy="200" r="22" fill="#10b981" opacity="0.8"/>
+  <text x="850" y="205" text-anchor="middle" fill="#ffffff" font-size="10">SaaS ERP</text>
+
+  <circle cx="820" cy="230" r="20" fill="#10b981" opacity="0.8"/>
+  <text x="820" y="235" text-anchor="middle" fill="#ffffff" font-size="10">AI Platform</text>
+
+  <circle cx="800" cy="450" r="22" fill="#ef4444" opacity="0.8"/>
+  <text x="800" y="455" text-anchor="middle" fill="#ffffff" font-size="10">Server Rack</text>
+
+  <circle cx="760" cy="470" r="18" fill="#ef4444" opacity="0.8"/>
+  <text x="760" y="475" text-anchor="middle" fill="#ffffff" font-size="9">Switch 48P</text>
+
+  <line x1="560" y1="500" x2="930" y2="500" stroke="#94a3b8" stroke-width="2"/>
+  <line x1="560" y1="150" x2="560" y2="500" stroke="#94a3b8" stroke-width="2"/>
+  <text x="750" y="535" fill="#94a3b8" font-size="12" text-anchor="middle">Revenue ($M) ──></text>
+  <text x="535" y="320" fill="#94a3b8" font-size="12" text-anchor="middle" transform="rotate(-90 535 320)">Margin % ──></text>
+</svg>

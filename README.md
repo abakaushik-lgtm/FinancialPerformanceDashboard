@@ -18,6 +18,7 @@ This enterprise repository provides an automated ETL pipeline with data validati
 
 ## 📋 Table of Contents
 - [Project Overview & Business Problem](#-project-overview--business-problem)
+- [Dashboard Screenshots Gallery](#-dashboard-screenshots-gallery)
 - [Dataset Description](#-dataset-description)
 - [Key Performance Indicators (KPIs)](#-key-performance-indicators-kpis)
 - [Tech Stack](#%EF%B8%8F-tech-stack)
@@ -48,6 +49,38 @@ Build a unified, automated, production-ready financial analytics ecosystem to:
 3. **Design Enterprise Power BI Blueprints**: Establish a Star Schema data model, 25+ DAX time-intelligence metrics, tooltips, drill-through, dynamic titles, and bookmarks.
 4. **Deploy Interactive Web App**: Launch a Streamlit web application featuring multi-select sidebar filters, dark/light theme switching, interactive Plotly charts, 12-month trend forecasting, what-if price elasticity simulation, and single-click CSV/PDF report exporting.
 5. **Synthesize Executive Business Insights**: Deliver 25+ actionable strategic recommendations to optimize high-margin SaaS/Cloud product lines and control hardware component costs.
+
+---
+
+## 🖼️ Dashboard Screenshots Gallery
+
+### 1. Executive Summary Dashboard
+![Executive Summary Dashboard](dashboard_images/01_executive_dashboard.svg)
+
+---
+
+### 2. Regional Analysis & Geography
+![Regional Analysis Dashboard](dashboard_images/02_regional_analysis.svg)
+
+---
+
+### 3. Product Portfolio & Margin Analysis
+![Product Analysis Dashboard](dashboard_images/03_product_analysis.svg)
+
+---
+
+### 4. Expense Structure & Cost Audit (Waterfall)
+![Expense Analysis Dashboard](dashboard_images/04_expense_analysis.svg)
+
+---
+
+### 5. Financial Forecast & What-If Scenario Simulator
+![Financial Forecast Dashboard](dashboard_images/05_forecast_page.svg)
+
+---
+
+### 6. Interactive Streamlit Web Application
+![Streamlit Web Dashboard](dashboard_images/06_streamlit_dashboard.svg)
 
 ---
 
@@ -295,10 +328,13 @@ Financial_Performance_Dashboard/
 │   └── styles.css                    # Glassmorphism dark mode stylesheet
 │
 ├── dashboard_images/
-│   └── architecture_diagram.svg      # System architecture vector diagram
-│
-├── reports/
-│   └── business_insights.md          # 25+ Executive business insights & strategic recommendations
+│   ├── architecture_diagram.svg      # System architecture vector diagram
+│   ├── 01_executive_dashboard.svg    # Page 1: Executive Summary screenshot
+│   ├── 02_regional_analysis.svg     # Page 2: Regional Analysis screenshot
+│   ├── 03_product_analysis.svg      # Page 3: Product Analysis screenshot
+│   ├── 04_expense_analysis.svg      # Page 4: Expense Analysis screenshot
+│   ├── 05_forecast_page.svg          # Page 5: Forecast & Simulator screenshot
+│   └── 06_streamlit_dashboard.svg    # Streamlit Web Dashboard screenshot
 │
 ├── .gitignore                        # Git ignore file
 ├── app.py                            # Main Streamlit web application entry point

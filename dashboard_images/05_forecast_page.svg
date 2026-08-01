@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%" style="background-color: #0f172a; font-family: Inter, sans-serif;">
+  <rect x="0" y="0" width="1000" height="60" fill="#1e293b"/>
+  <text x="30" y="38" fill="#f8fafc" font-size="20" font-weight="bold">📈 Power BI &amp; Python - Page 5: Financial Forecast &amp; Scenario Simulator</text>
+  
+  <!-- Forecast Chart Upper -->
+  <rect x="30" y="80" width="940" height="300" rx="10" fill="#1e293b" stroke="#334155"/>
+  <text x="50" y="115" fill="#f8fafc" font-size="16" font-weight="bold">12-Month Revenue &amp; Net Profit Exponential Smoothing Forecast ($M)</text>
+
+  <!-- Historical Line -->
+  <path d="M 60 280 L 150 270 L 240 250 L 330 240 L 420 220 L 510 210 L 600 180" fill="none" stroke="#6366f1" stroke-width="4"/>
+  
+  <!-- Forecast Fan / Confidence Interval Band -->
+  <polygon points="600,180 700,150 800,130 900,100 900,240 800,230 700,210 600,180" fill="#10b981" opacity="0.2"/>
+  <path d="M 600 180 L 700 165 L 800 145 L 900 120" fill="none" stroke="#10b981" stroke-width="4" stroke-dasharray="6,6"/>
+
+  <text x="600" y="170" fill="#6366f1" font-size="12" font-weight="bold">Historical Revenue</text>
+  <text x="750" y="130" fill="#10b981" font-size="12" font-weight="bold">12-Mo Forecast (95% CI)</text>
+
+  <!-- Lower What-If Scenario Sliders Mockup -->
+  <rect x="30" y="400" width="940" height="160" rx="10" fill="#1e293b" stroke="#334155"/>
+  <text x="50" y="430" fill="#f8fafc" font-size="16" font-weight="bold">Interactive What-If Scenario Controls</text>
+
+  <text x="50" y="465" fill="#94a3b8" font-size="12">Price Change Parameter (+5.0%):</text>
+  <rect x="50" y="475" width="260" height="10" rx="5" fill="#334155"/>
+  <circle cx="210" cy="480" r="10" fill="#6366f1"/>
+
+  <text x="350" y="465" fill="#94a3b8" font-size="12">COGS Shift Parameter (-2.0%):</text>
+  <rect x="350" y="475" width="260" height="10" rx="5" fill="#334155"/>
+  <circle cx="430" cy="480" r="10" fill="#10b981"/>
+
+  <text x="650" y="465" fill="#94a3b8" font-size="12">Marketing Boost (+10.0%):</text>
+  <rect x="650" y="475" width="260" height="10" rx="5" fill="#334155"/>
+  <circle cx="780" cy="480" r="10" fill="#f59e0b"/>
+
+  <rect x="50" y="505" width="860" height="40" rx="6" fill="#0f172a" stroke="#10b981"/>
+  <text x="480" y="530" text-anchor="middle" fill="#10b981" font-size="14" font-weight="bold">Simulated Outcome: Revenue $384.9M (+$18.3M) | Net Profit $118.2M (+$8.4M) | Net Margin 30.7%</text>
+</svg>

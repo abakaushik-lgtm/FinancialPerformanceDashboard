@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%" style="background-color: #0f172a; font-family: Inter, sans-serif;">
+  <rect x="0" y="0" width="1000" height="60" fill="#1e293b"/>
+  <text x="30" y="38" fill="#f8fafc" font-size="20" font-weight="bold">🌍 Power BI - Page 2: Regional Performance &amp; Geography</text>
+  
+  <!-- Left Map Container -->
+  <rect x="30" y="80" width="550" height="480" rx="10" fill="#1e293b" stroke="#334155"/>
+  <text x="50" y="115" fill="#f8fafc" font-size="16" font-weight="bold">Global Revenue Distribution &amp; Regional Profit Margins</text>
+  <!-- World Map Bubble Mockup -->
+  <circle cx="180" cy="240" r="50" fill="#6366f1" opacity="0.6"/>
+  <text x="180" y="245" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold">North America $127.9M</text>
+  <circle cx="330" cy="220" r="40" fill="#10b981" opacity="0.6"/>
+  <text x="330" y="225" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="bold">Europe $91.2M</text>
+  <circle cx="450" cy="300" r="35" fill="#3b82f6" opacity="0.6"/>
+  <text x="450" y="305" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="bold">APAC $74.1M</text>
+  <circle cx="230" cy="390" r="25" fill="#f59e0b" opacity="0.6"/>
+  <text x="230" y="395" text-anchor="middle" fill="#ffffff" font-size="10" font-weight="bold">LatAm $37.4M</text>
+  <circle cx="360" cy="350" r="22" fill="#ec4899" opacity="0.6"/>
+  <text x="360" y="355" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="bold">MEA $35.9M</text>
+
+  <!-- Right Side Container: Top Cities & Margins -->
+  <rect x="600" y="80" width="370" height="480" rx="10" fill="#1e293b" stroke="#334155"/>
+  <text x="620" y="115" fill="#f8fafc" font-size="16" font-weight="bold">Top 10 Cities by Revenue ($M)</text>
+  
+  <rect x="620" y="140" width="320" height="32" rx="4" fill="#334155"/>
+  <rect x="620" y="140" width="280" height="32" rx="4" fill="#6366f1"/>
+  <text x="630" y="161" fill="#ffffff" font-size="12" font-weight="bold">New York (USA) - $38.4M</text>
+
+  <rect x="620" y="182" width="320" height="32" rx="4" fill="#334155"/>
+  <rect x="620" y="182" width="240" height="32" rx="4" fill="#6366f1"/>
+  <text x="630" y="203" fill="#ffffff" font-size="12" font-weight="bold">London (UK) - $31.2M</text>
+
+  <rect x="620" y="224" width="320" height="32" rx="4" fill="#334155"/>
+  <rect x="620" y="224" width="210" height="32" rx="4" fill="#6366f1"/>
+  <text x="630" y="245" fill="#ffffff" font-size="12" font-weight="bold">Tokyo (Japan) - $26.8M</text>
+
+  <rect x="620" y="266" width="320" height="32" rx="4" fill="#334155"/>
+  <rect x="620" y="266" width="180" height="32" rx="4" fill="#6366f1"/>
+  <text x="630" y="287" fill="#ffffff" font-size="12" font-weight="bold">Frankfurt (Germany) - $22.5M</text>
+
+  <rect x="620" y="308" width="320" height="32" rx="4" fill="#334155"/>
+  <rect x="620" y="308" width="160" height="32" rx="4" fill="#6366f1"/>
+  <text x="630" y="329" fill="#ffffff" font-size="12" font-weight="bold">San Francisco (USA) - $19.8M</text>
+
+  <rect x="620" y="350" width="320" height="32" rx="4" fill="#334155"/>
+  <rect x="620" y="350" width="140" height="32" rx="4" fill="#6366f1"/>
+  <text x="630" y="371" fill="#ffffff" font-size="12" font-weight="bold">Sydney (Australia) - $17.4M</text>
+
+  <rect x="620" y="392" width="320" height="32" rx="4" fill="#334155"/>
+  <rect x="620" y="392" width="120" height="32" rx="4" fill="#6366f1"/>
+  <text x="630" y="413" fill="#ffffff" font-size="12" font-weight="bold">Toronto (Canada) - $15.1M</text>
+</svg>
