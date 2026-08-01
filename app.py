@@ -127,13 +127,13 @@ st.sidebar.info(f"Active Transactions: **{len(df_filtered):,}** / {len(df_raw):,
 # 4. MAIN HEADER & EXECUTIVE KPIS
 # -----------------------------------------------------------------------------
 st.title("💼 Financial Performance & Business Insights Dashboard")
-st.markdown("Enterprise BI Suite with Time-Series Forecasting, What-If Scenario Planning, and Automated ETL Validation.")
+st.markdown("Interactive Financial Analytics Dashboard with Forecasting, Scenario Analysis & ETL Validation")
 
 kpis = calculate_kpis(df_filtered)
 yoy = calculate_yoy_growth(df_filtered)
 
-# 6 KPI Columns (Guaranteed Non-Zero Executive Display)
-col1, col2, col3, col4, col5, col6 = st.columns(6)
+# 6 KPI Columns (Optimized Column Ratios for Full Metric Label Display)
+col1, col2, col3, col4, col5, col6 = st.columns([1.0, 1.0, 1.0, 1.0, 1.05, 1.25])
 
 with col1:
     st.metric(
