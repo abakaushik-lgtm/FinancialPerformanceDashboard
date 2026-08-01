@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="100%" height="100%" style="background-color: #0f172a; font-family: Inter, sans-serif;">
+  <!-- Title -->
+  <text x="500" y="45" text-anchor="middle" fill="#f8fafc" font-size="24" font-weight="bold">Financial Performance Dashboard Architecture</text>
+  <text x="500" y="75" text-anchor="middle" fill="#94a3b8" font-size="14">End-to-End Data Pipeline, Analytics Engine &amp; Web Dashboards</text>
+
+  <!-- Box 1: Raw Data & Python Pipeline -->
+  <rect x="50" y="120" width="260" height="420" rx="12" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+  <text x="180" y="155" text-anchor="middle" fill="#38bdf8" font-size="18" font-weight="bold">1. Python Data Pipeline</text>
+  <line x1="70" y1="170" x2="290" y2="170" stroke="#334155" stroke-width="1"/>
+  <rect x="70" y="190" width="220" height="60" rx="8" fill="#0f172a" stroke="#0284c7" stroke-width="1"/>
+  <text x="180" y="215" text-anchor="middle" fill="#f1f5f9" font-size="14">Raw Data Gen (12k Txns)</text>
+  <text x="180" y="235" text-anchor="middle" fill="#94a3b8" font-size="11">Anomalies, Nulls, Outliers</text>
+  
+  <rect x="70" y="270" width="220" height="70" rx="8" fill="#0f172a" stroke="#0284c7" stroke-width="1"/>
+  <text x="180" y="295" text-anchor="middle" fill="#f1f5f9" font-size="14">Data Cleaning Pipeline</text>
+  <text x="180" y="315" text-anchor="middle" fill="#94a3b8" font-size="11">Pandas/NumPy Imputation,</text>
+  <text x="180" y="330" text-anchor="middle" fill="#94a3b8" font-size="11">Deduplication &amp; 3x IQR Capping</text>
+
+  <rect x="70" y="360" width="220" height="60" rx="8" fill="#0f172a" stroke="#0284c7" stroke-width="1"/>
+  <text x="180" y="385" text-anchor="middle" fill="#f1f5f9" font-size="14">Feature Engineering</text>
+  <text x="180" y="405" text-anchor="middle" fill="#94a3b8" font-size="11">Gross Profit, Margins, Variance</text>
+
+  <!-- Arrow 1 -->
+  <line x1="310" y1="330" x2="370" y2="330" stroke="#38bdf8" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <!-- Box 2: SQL Analytics Engine -->
+  <rect x="370" y="120" width="260" height="420" rx="12" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+  <text x="500" y="155" text-anchor="middle" fill="#a855f7" font-size="18" font-weight="bold">2. SQL Engine &amp; DB</text>
+  <line x1="390" y1="170" x2="610" y2="170" stroke="#334155" stroke-width="1"/>
+  <rect x="390" y="190" width="220" height="60" rx="8" fill="#0f172a" stroke="#9333ea" stroke-width="1"/>
+  <text x="500" y="215" text-anchor="middle" fill="#f1f5f9" font-size="14">SQLite Database</text>
+  <text x="500" y="235" text-anchor="middle" fill="#94a3b8" font-size="11">financial_db.sqlite</text>
+  
+  <rect x="390" y="270" width="220" height="110" rx="8" fill="#0f172a" stroke="#9333ea" stroke-width="1"/>
+  <text x="500" y="295" text-anchor="middle" fill="#f1f5f9" font-size="14">25+ Business SQL Queries</text>
+  <text x="500" y="315" text-anchor="middle" fill="#94a3b8" font-size="11">• Window Functions (RANK, LAG)</text>
+  <text x="500" y="335" text-anchor="middle" fill="#94a3b8" font-size="11">• Multi-tier CTEs &amp; Aggregations</text>
+  <text x="500" y="355" text-anchor="middle" fill="#94a3b8" font-size="11">• Cumulative &amp; Moving Averages</text>
+
+  <rect x="390" y="400" width="220" height="60" rx="8" fill="#0f172a" stroke="#9333ea" stroke-width="1"/>
+  <text x="500" y="425" text-anchor="middle" fill="#f1f5f9" font-size="14">Executive SQL Views</text>
+  <text x="500" y="445" text-anchor="middle" fill="#94a3b8" font-size="11">KPI &amp; Regional Summaries</text>
+
+  <!-- Arrow 2 -->
+  <line x1="630" y1="330" x2="690" y2="330" stroke="#a855f7" stroke-width="3"/>
+
+  <!-- Box 3: Dashboards & Web Application -->
+  <rect x="690" y="120" width="260" height="420" rx="12" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+  <text x="820" y="155" text-anchor="middle" fill="#34d399" font-size="18" font-weight="bold">3. BI &amp; App UI</text>
+  <line x1="710" y1="170" x2="930" y2="170" stroke="#334155" stroke-width="1"/>
+  
+  <rect x="710" y="190" width="220" height="110" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+  <text x="820" y="215" text-anchor="middle" fill="#f1f5f9" font-size="14">Streamlit Web App</text>
+  <text x="820" y="235" text-anchor="middle" fill="#94a3b8" font-size="11">• 5 Interactive View Tabs</text>
+  <text x="820" y="255" text-anchor="middle" fill="#94a3b8" font-size="11">• What-If Scenario Simulator</text>
+  <text x="820" y="275" text-anchor="middle" fill="#94a3b8" font-size="11">• Dynamic Plotly Visualizations</text>
+
+  <rect x="710" y="315" width="220" height="110" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+  <text x="820" y="340" text-anchor="middle" fill="#f1f5f9" font-size="14">Power BI Dashboard</text>
+  <text x="820" y="360" text-anchor="middle" fill="#94a3b8" font-size="11">• 25+ DAX Measures Library</text>
+  <text x="820" y="380" text-anchor="middle" fill="#94a3b8" font-size="11">• Star Schema Data Model</text>
+  <text x="820" y="400" text-anchor="middle" fill="#94a3b8" font-size="11">• 5-Page Executive Design</text>
+
+  <rect x="710" y="440" width="220" height="70" rx="8" fill="#0f172a" stroke="#10b981" stroke-width="1"/>
+  <text x="820" y="465" text-anchor="middle" fill="#f1f5f9" font-size="14">25+ Business Insights</text>
+  <text x="820" y="485" text-anchor="middle" fill="#94a3b8" font-size="11">Executive Recommendations</text>
+</svg>

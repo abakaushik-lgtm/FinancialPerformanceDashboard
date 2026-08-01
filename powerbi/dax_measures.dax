@@ -1,0 +1,135 @@
+// ============================================================================
+// Financial Performance Dashboard - Complete DAX Measures Library (25+ DAX Formulae)
+// Author: Senior Data Analyst & BI Developer
+// Tool: Power BI Desktop / DAX Engine
+// ============================================================================
+
+// ----------------------------------------------------------------------------
+// 1. CORE FINANCIAL MEASURES
+// ----------------------------------------------------------------------------
+
+Total Revenue = 
+SUM(financial_transactions[revenue])
+
+Total COGS = 
+SUM(financial_transactions[cogs])
+
+Total Operating Expense = 
+SUM(financial_transactions[operating_expense])
+
+Total Marketing Expense = 
+SUM(financial_transactions[marketing_expense])
+
+Total Tax = 
+SUM(financial_transactions[tax])
+
+Total Expenses = 
+[Total COGS] + [Total Operating Expense] + [Total Marketing Expense] + [Total Tax]
+
+Gross Profit = 
+[Total Revenue] - [Total COGS]
+
+Net Profit = 
+SUM(financial_transactions[profit])
+
+Gross Margin % = 
+DIVIDE([Gross Profit], [Total Revenue], 0) * 100
+
+Profit Margin % = 
+DIVIDE([Net Profit], [Total Revenue], 0) * 100
+
+Total Budget = 
+SUM(financial_transactions[budget])
+
+Actual Sales = 
+SUM(financial_transactions[actual_sales])
+
+Budget Variance = 
+[Actual Sales] - [Total Budget]
+
+Budget Utilization % = 
+DIVIDE([Actual Sales], [Total Budget], 0) * 100
+
+Average Order Value (AOV) = 
+AVERAGE(financial_transactions[revenue])
+
+Total Transactions = 
+COUNTROWS(financial_transactions)
+
+Cost Ratio % = 
+DIVIDE([Total Expenses], [Total Revenue], 0) * 100
+
+Expense Ratio % = 
+DIVIDE([Total Operating Expense] + [Total Marketing Expense], [Total Revenue], 0) * 100
+
+
+// ----------------------------------------------------------------------------
+// 2. TIME INTELLIGENCE & COMPARATIVE METRICS
+// ----------------------------------------------------------------------------
+
+YTD Revenue = 
+TOTALYTD([Total Revenue], 'Dim_Date'[Date])
+
+YTD Net Profit = 
+TOTALYTD([Net Profit], 'Dim_Date'[Date])
+
+Prior Year Revenue (PY) = 
+CALCULATE([Total Revenue], SAMEPERIODLASTYEAR('Dim_Date'[Date]))
+
+Prior Year Profit (PY) = 
+CALCULATE([Net Profit], SAMEPERIODLASTYEAR('Dim_Date'[Date]))
+
+Revenue YoY Growth = 
+[Total Revenue] - [Prior Year Revenue (PY)]
+
+Revenue YoY Growth % = 
+DIVIDE([Revenue YoY Growth], [Prior Year Revenue (PY)], 0) * 100
+
+Profit YoY Growth % = 
+VAR PrevProfit = [Prior Year Profit (PY)]
+RETURN DIVIDE([Net Profit] - PrevProfit, PrevProfit, 0) * 100
+
+QoQ Revenue Growth % = 
+VAR CurrentQtr = [Total Revenue]
+VAR PrevQtr = CALCULATE([Total Revenue], DATEADD('Dim_Date'[Date], -1, QUARTER))
+RETURN DIVIDE(CurrentQtr - PrevQtr, PrevQtr, 0) * 100
+
+MoM Revenue Growth % = 
+VAR CurrentMonth = [Total Revenue]
+VAR PrevMonth = CALCULATE([Total Revenue], DATEADD('Dim_Date'[Date], -1, MONTH))
+RETURN DIVIDE(CurrentMonth - PrevMonth, PrevMonth, 0) * 100
+
+
+// ----------------------------------------------------------------------------
+// 3. DYNAMIC TITLES & UX DAX METRICS
+// ----------------------------------------------------------------------------
+
+Selected Region Label = 
+IF(
+    ISFILTERED(financial_transactions[region]),
+    "Region: " & SELECTEDVALUE(financial_transactions[region], "Multiple Regions"),
+    "All Regions (Global Overview)"
+)
+
+Dynamic Executive Title = 
+"Financial Performance Summary (" & [Selected Region Label] & " - " & SELECTEDVALUE('Dim_Date'[Year], "2023-2025") & ")"
+
+Target KPI Status Indicator = 
+IF(
+    [Budget Utilization %] >= 100,
+    "🟢 Target Exceeded (" & FORMAT([Budget Utilization %] / 100, "0.0%") & ")",
+    "🔴 Target Missed (" & FORMAT([Budget Utilization %] / 100, "0.0%") & ")"
+)
+
+Product Rank by Revenue = 
+RANKX(
+    ALL(financial_transactions[product_name]),
+    [Total Revenue],
+    ,
+    DESC,
+    Dense
+)
+
+Dynamic Forecasting Scenario Revenue = 
+VAR PriceAdjustment = SELECTEDVALUE('Scenario_Parameters'[Price Change %], 0) / 100
+RETURN [Total Revenue] * (1 + PriceAdjustment)
