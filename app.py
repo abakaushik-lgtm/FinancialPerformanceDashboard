@@ -488,4 +488,4 @@ Average Order Value: ${kpis['aov']:,.2f}
 
 # Footer
 st.markdown("---")
-st.markdown("<p style='text-align: center; color: #64748b;'>Financial Performance Dashboard | Developed by Senior Data Analyst & BI Developer | Powered by Python & Streamlit</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #a5b4fc; font-weight: 600; font-size: 0.95rem; letter-spacing: 0.03em;'>Built with Python • Streamlit • Plotly • SQL • Power BI</p>", unsafe_allow_html=True)

@@ -1,6 +1,6 @@
 /* Custom Dark Mode & Glassmorphism Aesthetics for Streamlit */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 html, body, [class*="css"] {
     font-family: 'Inter', sans-serif;
@@ -12,39 +12,42 @@ html, body, [class*="css"] {
     color: #f8fafc;
 }
 
-/* Glassmorphism Metric Cards */
+/* Glassmorphism Metric Cards - Prominent Executive Styling */
 div[data-testid="stMetric"] {
-    background: rgba(30, 41, 59, 0.75);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    padding: 12px 14px;
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.85) 0%, rgba(15, 23, 42, 0.9) 100%);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
 }
 
 div[data-testid="stMetric"]:hover {
-    transform: translateY(-2px);
-    border-color: rgba(99, 102, 241, 0.5);
+    transform: translateY(-3px);
+    border-color: rgba(99, 102, 241, 0.6);
+    box-shadow: 0 14px 40px rgba(79, 70, 229, 0.3);
 }
 
 div[data-testid="stMetricLabel"] {
-    color: #94a3b8 !important;
-    font-size: 0.78rem !important;
-    font-weight: 600 !important;
+    color: #a5b4fc !important;
+    font-size: 0.82rem !important;
+    font-weight: 700 !important;
     text-transform: uppercase;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
     white-space: nowrap !important;
     overflow: visible !important;
     text-overflow: clip !important;
+    margin-bottom: 6px !important;
 }
 
 div[data-testid="stMetricValue"] {
-    color: #f8fafc !important;
-    font-weight: 700 !important;
-    font-size: 1.45rem !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    font-size: 1.65rem !important;
+    letter-spacing: -0.02em;
 }
 
 /* Sidebar Custom Styling */
