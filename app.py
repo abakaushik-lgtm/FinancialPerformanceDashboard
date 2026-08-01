@@ -14,6 +14,7 @@ import plotly.graph_objects as go
 import streamlit as st
 
 import importlib.util
+from datetime import datetime
 
 # Robustly load kpi_engine module avoiding streamlit package namespace collision
 kpi_engine_path = os.path.join(os.path.dirname(__file__), 'streamlit', 'kpi_engine.py')
@@ -77,11 +78,10 @@ def load_financial_data():
 df_raw = load_financial_data()
 
 # -----------------------------------------------------------------------------
-# 3. SIDEBAR FILTERS (BULLETPROOF DEFAULT SELECTION)
+# 3. SIDEBAR FILTERS
 # -----------------------------------------------------------------------------
-st.sidebar.image("https://img.icons8.com/isometric-headers/100/line-chart.png", width=64)
-st.sidebar.title("Financial Filters")
-st.sidebar.caption("⚡ Dynamic ETL & Real-Time Filtering")
+st.sidebar.title("📊 Financial Filters")
+st.sidebar.caption("⚡ Real-Time Analytics & Filter Engine")
 
 years = sorted(df_raw['Year'].unique().tolist())
 selected_years = st.sidebar.multiselect("Select Year(s)", options=years, default=years)
@@ -121,6 +121,7 @@ if st.sidebar.button("🔄 Reset All Filters"):
 
 st.sidebar.markdown("---")
 st.sidebar.markdown("**Automated ETL Status:** ✅ PASS")
+st.sidebar.markdown("**Last Refreshed:** 01 Aug 2026")
 st.sidebar.info(f"Active Transactions: **{len(df_filtered):,}** / {len(df_raw):,}")
 
 # -----------------------------------------------------------------------------
@@ -132,27 +133,27 @@ st.markdown("Interactive Financial Analytics Dashboard with Forecasting, Scenari
 kpis = calculate_kpis(df_filtered)
 yoy = calculate_yoy_growth(df_filtered)
 
-# 6 KPI Columns (Optimized Column Ratios for Full Metric Label Display)
+# 6 KPI Columns with Compact Numbers ($366.6M, $216.0M, $109.8M, $30.5K)
 col1, col2, col3, col4, col5, col6 = st.columns([1.0, 1.0, 1.0, 1.0, 1.05, 1.25])
 
 with col1:
     st.metric(
         label="Total Revenue",
-        value=f"${kpis['total_revenue']/1e6:.2f}M",
+        value=f"${kpis['total_revenue']/1e6:.1f}M",
         delta=f"{yoy['rev_growth']:+.1f}% YoY" if yoy['rev_growth'] != 0 else "+15.2% YoY"
     )
 
 with col2:
     st.metric(
         label="Gross Profit",
-        value=f"${kpis['total_gross_profit']/1e6:.2f}M",
+        value=f"${kpis['total_gross_profit']/1e6:.1f}M",
         delta=f"{kpis['gross_margin']:.1f}% Margin"
     )
 
 with col3:
     st.metric(
         label="Total Expenses",
-        value=f"${kpis['total_expenses']/1e6:.2f}M",
+        value=f"${kpis['total_expenses']/1e6:.1f}M",
         delta=f"{kpis['cost_ratio']:.1f}% Cost Ratio",
         delta_color="inverse"
     )
@@ -160,7 +161,7 @@ with col3:
 with col4:
     st.metric(
         label="Net Profit",
-        value=f"${kpis['total_net_profit']/1e6:.2f}M",
+        value=f"${kpis['total_net_profit']/1e6:.1f}M",
         delta=f"{kpis['net_margin']:.1f}% Net Margin"
     )
 
@@ -168,14 +169,14 @@ with col5:
     util = kpis['budget_utilization']
     st.metric(
         label="Budget Target",
-        value=f"${kpis['total_budget']/1e6:.2f}M",
+        value=f"${kpis['total_budget']/1e6:.1f}M",
         delta=f"{util:.1f}% Utilized"
     )
 
 with col6:
     st.metric(
         label="Average Order Value",
-        value=f"${kpis['aov']:,.0f}",
+        value=f"${kpis['aov']/1e3:.1f}K",
         delta=f"{kpis['total_orders']:,} Txns"
     )
 
@@ -439,9 +440,9 @@ with tab5:
     sim_margin = (sim_profit / sim_rev * 100) if sim_rev > 0 else 0.0
     
     sc1, sc2, sc3, sc4 = st.columns(4)
-    sc1.metric("Simulated Revenue", f"${sim_rev/1e6:.2f}M", delta=f"${(sim_rev-base_rev)/1e6:+.2f}M")
-    sc2.metric("Simulated Net Profit", f"${sim_profit/1e6:.2f}M", delta=f"${(sim_profit-base_profit)/1e6:+.2f}M")
-    sc3.metric("Simulated Net Margin", f"{sim_margin:.2f}%", delta=f"{sim_margin - (base_profit/base_rev*100):+.2f}%")
+    sc1.metric("Simulated Revenue", f"${sim_rev/1e6:.1f}M", delta=f"${(sim_rev-base_rev)/1e6:+.1f}M")
+    sc2.metric("Simulated Net Profit", f"${sim_profit/1e6:.1f}M", delta=f"${(sim_profit-base_profit)/1e6:+.1f}M")
+    sc3.metric("Simulated Net Margin", f"{sim_margin:.1f}%", delta=f"{sim_margin - (base_profit/base_rev*100):+.1f}%")
     sc4.metric("Marketing ROI Impact", f"{(sim_rev - base_rev)/(sim_mkt - base_mkt):.2f}x" if (sim_mkt - base_mkt) != 0 else "N/A")
 
 # TAB 6: DATA INSPECTOR & EXPORTER
@@ -471,6 +472,7 @@ with tab6:
     with e_col2:
         report_text = f"""FINANCIAL EXECUTIVE SUMMARY REPORT
 Date Range: 2023-01-01 to 2025-12-31
+Last Refreshed: 01 Aug 2026
 Total Transactions: {len(df_filtered):,}
 Total Revenue: ${kpis['total_revenue']:,.2f}
 Total Gross Profit: ${kpis['total_gross_profit']:,.2f} ({kpis['gross_margin']:.2f}% Margin)
@@ -488,4 +490,4 @@ Average Order Value: ${kpis['aov']:,.2f}
 
 # Footer
 st.markdown("---")
-st.markdown("<p style='text-align: center; color: #a5b4fc; font-weight: 600; font-size: 0.95rem; letter-spacing: 0.03em;'>Built with Python • Streamlit • Plotly • SQL • Power BI</p>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #a5b4fc; font-weight: 600; font-size: 0.95rem; letter-spacing: 0.03em;'>Built with Python • SQL • Plotly • Streamlit • Power BI</p>", unsafe_allow_html=True)
